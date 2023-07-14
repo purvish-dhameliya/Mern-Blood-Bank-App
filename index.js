@@ -4,10 +4,17 @@ const colors = require('colors')
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const path = require('path');
 dotenv.config();
 
 // rest object 
 const app = express();
+
+app.use(express.static(path.join(__dirname, './client/build')))
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, './client/build/index.html'))
+})
+
 
 // app middlewares
 app.use(cors())
